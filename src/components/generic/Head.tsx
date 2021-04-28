@@ -1,5 +1,5 @@
 import NextHead from 'next/head';
-import { HeadProps } from '../../interfaces/props/head-props.interface';
+import { HeadProps } from 'interfaces/props/head-props.interface';
 
 const Head: React.FC<HeadProps> = ({
   title,
