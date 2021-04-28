@@ -1,8 +1,8 @@
 import { Heading } from '@chakra-ui/react';
-import MainLayout from '../components/layouts/MainLayout';
-import { MainPaths } from '../enums/paths/main-paths.enum';
+import MainLayout from 'components/layouts/MainLayout';
+import { MainPaths } from 'enums/paths/main-paths.enum';
 
-export default function Home() {
+const Home = () => {
   return (
     <MainLayout
       title="Home"
@@ -18,4 +18,6 @@ export default function Home() {
       </Heading>
     </MainLayout>
   );
-}
+};
+
+export default Home;

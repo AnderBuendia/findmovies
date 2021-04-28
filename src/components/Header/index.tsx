@@ -2,10 +2,10 @@ import { FC, useState } from 'react';
 import NextLink from 'next/link';
 import { useColorMode, Flex, Button, IconButton, Link } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import HeaderContainer from './HeaderContainer';
-import MenuMobileDropdown from './MenuMobileDropdown';
-import LogoIcon from '../icons/logo-icon';
-import MenuItem from './MenuItem';
+import HeaderContainer from 'components/Header/HeaderContainer';
+import MenuMobileDropdown from 'components/Header/MenuMobileDropdown';
+import LogoIcon from 'components/icons/logo-icon';
+import MenuItem from 'components/Header/MenuItem';
 
 const Header: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
