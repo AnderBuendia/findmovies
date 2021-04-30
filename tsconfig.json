@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -13,8 +12,23 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@Components/*": ["src/components/*"],
+      "@Pages/*": ["src/pages/*"],
+      "@Lib/*": ["src/lib/*"],
+      "@Styles/*": ["src/styles/*"],
+      "@Interfaces/*": ["src/interfaces/*"],
+      "@Enums/*": ["src/enums/*"],
+      "@Config/*": ["src/config/*"]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/__mocks__/fileMock.ts"
+  ],
   "exclude": ["node_modules"]
 }

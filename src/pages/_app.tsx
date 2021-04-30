@@ -1,12 +1,21 @@
+import { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate } from 'react-query/hydration';
 import { ChakraProvider } from '@chakra-ui/react';
-import customTheme from 'utils/theme';
+import customTheme from '@Lib/utils/theme';
 
-function MyApp({ Component, pageProps }) {
+const queryClient = new QueryClient();
+
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider resetCSS theme={customTheme}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+        </Hydrate>
+      </QueryClientProvider>
     </ChakraProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;
