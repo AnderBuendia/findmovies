@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { PopularMovies } from '@Interfaces/movies/popular.interface';
 
-export const fetchPopularMovies = async () => {
+export const fetchPopularMovies = async (): Promise<PopularMovies[]> => {
   try {
     const { data } = await axios.get(
       `${process.env.API_MOVIES_URL}movie/popular`,

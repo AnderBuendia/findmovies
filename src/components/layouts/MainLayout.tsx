@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
-import Head from '../generic/Head';
-import Header from '../Header';
-import { HeadProps } from '../../interfaces/props/head-props.interface';
+import Head from '@Components/generic/Head';
+import Header from '@Components/Header';
+import { HeadProps } from '@Interfaces/props/head-props.interface';
 
 const MainLayout: React.FC<HeadProps> = ({
   title,
@@ -13,12 +13,12 @@ const MainLayout: React.FC<HeadProps> = ({
     <>
       <Head title={title} description={description} url={url} />
 
-      <div>
+      <Flex direction="column">
         <Header />
-        <Flex justify="center" alignItems="center" height="25vh">
+        <Flex justify="center" alignItems="center" mt={6}>
           {children}
         </Flex>
-      </div>
+      </Flex>
     </>
   );
 };
