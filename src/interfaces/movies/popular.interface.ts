@@ -3,4 +3,5 @@ export interface PopularMovies {
   poster: string;
   rating: number;
   title: string;
+  votes: number;
 }

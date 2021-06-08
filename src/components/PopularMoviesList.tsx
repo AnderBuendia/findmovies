@@ -1,13 +1,12 @@
 import {
   Box,
-  Text,
-  Flex,
+  Image,
   CircularProgress,
   CircularProgressLabel,
-  Center,
-  Image,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { PopularMovies } from '@Interfaces/movies/popular.interface';
+import { MainPaths } from '@Enums/paths/main-paths.enum';
 
 export type PopularMoviesListProps = {
   movie: PopularMovies;
@@ -15,51 +14,54 @@ export type PopularMoviesListProps = {
 
 const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
   return (
-    <Box
-      key={movie.id}
-      justify="center"
-      align="center"
-      shadow="2xl"
-      border="1px"
-      borderColor="gray.600"
-      borderRadius="lg"
-    >
-      <Image
-        borderTopLeftRadius="md"
-        borderTopRightRadius="md"
-        boxSize="260"
-        src={movie.poster}
-        alt={movie.title}
-        shadow="md"
-        borderBottom="1px"
-        borderColor="gray.600"
-      />
+    <Link href={`${MainPaths.MOVIE}/${movie.id}`}>
+      <Box
+        maxW="sm"
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        boxShadow="md"
+        _hover={{ opacity: 0.7, cursor: 'pointer' }}
+      >
+        <Image src={movie.poster} alt={movie.title} />
 
-      <Center h="150px" bgColor="blackAlpha.100" p={2}>
-        <Flex direction="column">
-          <Text
-            position="relative"
-            fontSize="lg"
-            fontWeight="bold"
-            align="center"
-            my={1}
+        <Box p="6">
+          <Box
+            mt="1"
+            fontWeight="semibold"
+            as="h4"
+            lineHeight="tight"
+            isTruncated
+            textAlign="center"
           >
             {movie.title}
-          </Text>
+          </Box>
 
-          <CircularProgress
-            trackColor="gray.600"
-            color="green.400"
-            value={movie.rating * 10}
-            verticalAlign="none"
+          <Box
+            d="flex"
+            flexDirection="column"
+            mt="2"
+            alignItems="center"
+            justifyContent="center"
           >
-            <CircularProgressLabel fontWeight="bold" fontSize="sm">
-              {movie.rating * 10}%
-            </CircularProgressLabel>
-          </CircularProgress>
-        </Flex>
-      </Center>
-    </Box>
+            <CircularProgress
+              trackColor="gray.600"
+              color="green.400"
+              value={movie.rating * 10}
+              verticalAlign="none"
+            >
+              <CircularProgressLabel fontWeight="bold" fontSize="sm">
+                {movie.rating * 10}%
+              </CircularProgressLabel>
+            </CircularProgress>
+
+            <Box as="span" ml="2" color="gray.600" fontSize="sm">
+              {movie.votes} reviews
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Link>
   );
 };
 
