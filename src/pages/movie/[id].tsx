@@ -1,8 +1,9 @@
 import { GetStaticProps, GetStaticPropsContext, GetStaticPaths } from 'next';
 import { dehydrate } from 'react-query/hydration';
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { fetchMovieDetail, fetchPopularMovies } from '@Lib/service';
+import useMovie, { fetchMovieDetail } from '@Lib/hooks/useMovie';
+import { fetchPopularMovies } from '@Lib/hooks/useMovies';
 import MovieDetailContent from '@Components/MovieDetailContent';
 import MainLayout from '@Components/layouts/MainLayout';
 import { GSPropsContextParams } from '@Interfaces/props/getstatic-props.interface';
@@ -12,12 +13,12 @@ import { MainPaths } from '@Enums/paths/main-paths.enum';
 export type MovieDetailPageProps = {
   movieDetail: MovieDetail;
 };
+
 const MovieDetailPage: React.FC<MovieDetailPageProps> = () => {
   const router = useRouter();
-  const { id: movieId } = router.query;
-  const { data, isLoading, error } = useQuery<MovieDetail>('movieDetail', {
-    staleTime: Infinity,
-  });
+  const { id: movieId } = router.query as Record<string, string>;
+
+  const { data, isLoading, error } = useMovie(movieId);
 
   console.log('ERROR', error);
   console.log('DATA', data);
@@ -50,15 +51,10 @@ export const getStaticProps: GetStaticProps = async (
   ctx: GetStaticPropsContext
 ) => {
   const { id } = ctx.params as GSPropsContextParams;
-
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery<MovieDetail>(
-    'movieDetail',
-    () => fetchMovieDetail(id),
-    {
-      staleTime: Infinity,
-    }
+  await queryClient.prefetchQuery<MovieDetail>('movieDetail', () =>
+    fetchMovieDetail(id)
   );
 
   return {
