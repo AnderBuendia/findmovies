@@ -4,12 +4,18 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { MovieDetail } from '@Interfaces/movies/detail.interface';
 
+export type QueryMovieDetailType = {
+  queryKey: [string, { id: string }];
+};
+
 export const fetchMovieDetail = async (
-  movieId: string
+  params: QueryMovieDetailType
 ): Promise<MovieDetail> => {
+  const [, { id }] = params.queryKey;
+
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}?`,
+      `${publicRuntimeConfig.API_MOVIES_URL}movie/${id}?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -18,7 +24,7 @@ export const fetchMovieDetail = async (
       }
     );
 
-    const videoKey = await fetchMovieDetailTrailer(movieId);
+    const videoKey = await fetchMovieDetailTrailer(id);
 
     const modifiedData: MovieDetail = {
       title: data.title,
@@ -59,8 +65,9 @@ export const fetchMovieDetailTrailer = async (movieId: string) => {
 };
 
 const useMovie = (movieId: string) => {
-  return useQuery<MovieDetail, Error>('movieDetail', () =>
-    fetchMovieDetail(movieId)
+  return useQuery<MovieDetail, Error>(
+    ['movieDetail', { id: movieId }],
+    fetchMovieDetail
   );
 };
 

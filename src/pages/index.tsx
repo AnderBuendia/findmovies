@@ -1,5 +1,6 @@
+import { useState, useContext } from 'react';
 import { Flex, Box, SimpleGrid, Heading } from '@chakra-ui/react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import useMovies, { fetchPopularMovies } from '@Lib/hooks/useMovies';
@@ -16,7 +17,8 @@ export type HomePageProps = {
 };
 
 const HomePage: React.FC<HomePageProps> = () => {
-  const { data, isLoading, error } = useMovies();
+  const [popularThisWeek, setPopularThisWeek] = useState(false);
+  const { data, isLoading, error } = useMovies({ popularThisWeek });
 
   isLoading && <ListSkeleton />;
   error && <div>Something went wrong...</div>;
@@ -47,7 +49,13 @@ const HomePage: React.FC<HomePageProps> = () => {
           >
             Today
           </Box>
-          <Box px={4}>This Week</Box>
+          <Box
+            px={4}
+            _hover={{ cursor: 'pointer' }}
+            onClick={() => setPopularThisWeek(true)}
+          >
+            This Week
+          </Box>
         </Flex>
       </Flex>
 
@@ -61,10 +69,10 @@ const HomePage: React.FC<HomePageProps> = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery<PopularMovies[]>(
-    'popularMovies',
+    ['popularMovies', { popularThisWeek: false }],
     fetchPopularMovies
   );
 

@@ -4,18 +4,27 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { PopularMovies } from '@Interfaces/movies/popular.interface';
 
-export const fetchPopularMovies = async (): Promise<PopularMovies[]> => {
+export type QueryPopularMoviesType = {
+  queryKey: [string, { popularThisWeek: boolean }];
+};
+
+export const fetchPopularMovies = async (
+  params: QueryPopularMoviesType
+): Promise<PopularMovies[]> => {
+  const [, { popularThisWeek }] = params.queryKey;
+
+  const url = `${publicRuntimeConfig.API_MOVIES_URL}/trending/movie/${
+    popularThisWeek ? 'week' : 'day'
+  }`;
+
   try {
-    const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/popular`,
-      {
-        params: {
-          api_key: publicRuntimeConfig.API_KEY,
-          language: 'en-US',
-          page: 1,
-        },
-      }
-    );
+    const { data } = await axios.get(`${url}`, {
+      params: {
+        api_key: publicRuntimeConfig.API_KEY,
+        language: 'en-US',
+        page: 1,
+      },
+    });
 
     const modifiedData: PopularMovies[] = data['results'].map((result) => ({
       id: result['id'],
@@ -31,8 +40,11 @@ export const fetchPopularMovies = async (): Promise<PopularMovies[]> => {
   }
 };
 
-const useMovies = () => {
-  return useQuery<PopularMovies[], Error>('popularMovies', fetchPopularMovies);
+const useMovies = ({ popularThisWeek }: { popularThisWeek: boolean }) => {
+  return useQuery<PopularMovies[], Error>(
+    ['popularMovies', { popularThisWeek }],
+    fetchPopularMovies
+  );
 };
 
 export default useMovies;
