@@ -1,49 +1,30 @@
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
-import { PopularMovies } from '@Interfaces/movies/popular.interface';
+import { useQuery } from 'react-query';
 import { MovieDetail } from '@Interfaces/movies/detail.interface';
 
-export const fetchPopularMovies = async (): Promise<PopularMovies[]> => {
-  try {
-    const { data } = await axios.get(
-      `${process.env.API_MOVIES_URL}movie/popular`,
-      {
-        params: {
-          api_key: process.env.API_KEY,
-          language: 'en-US',
-          page: 1,
-        },
-      }
-    );
-
-    const modifiedData: PopularMovies[] = data['results'].map((result) => ({
-      id: result['id'],
-      title: result['title'],
-      poster: process.env.NEXT_PUBLIC_POSTER_URL + result['poster_path'],
-      rating: result['vote_average'],
-      votes: result['vote_count'],
-    }));
-
-    return modifiedData;
-  } catch (error) {
-    console.log(error.message);
-  }
+export type QueryMovieDetailType = {
+  queryKey: [string, { id: string }];
 };
 
 export const fetchMovieDetail = async (
-  movieId: string
+  params: QueryMovieDetailType
 ): Promise<MovieDetail> => {
+  const [, { id }] = params.queryKey;
+
   try {
     const { data } = await axios.get(
-      `${process.env.API_MOVIES_URL}movie/${movieId}?`,
+      `${publicRuntimeConfig.API_MOVIES_URL}movie/${id}?`,
       {
         params: {
-          api_key: process.env.API_KEY,
+          api_key: publicRuntimeConfig.API_KEY,
           language: 'en_US',
         },
       }
     );
 
-    const videoKey = await fetchMovieDetailTrailer(movieId);
+    const videoKey = await fetchMovieDetailTrailer(id);
 
     const modifiedData: MovieDetail = {
       title: data.title,
@@ -69,10 +50,10 @@ export const fetchMovieDetail = async (
 export const fetchMovieDetailTrailer = async (movieId: string) => {
   try {
     const { data } = await axios.get(
-      `${process.env.API_MOVIES_URL}movie/${movieId}/videos?`,
+      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}/videos?`,
       {
         params: {
-          api_key: process.env.API_KEY,
+          api_key: publicRuntimeConfig.API_KEY,
         },
       }
     );
@@ -82,3 +63,12 @@ export const fetchMovieDetailTrailer = async (movieId: string) => {
     console.log(error);
   }
 };
+
+const useMovie = (movieId: string) => {
+  return useQuery<MovieDetail, Error>(
+    ['movieDetail', { id: movieId }],
+    fetchMovieDetail
+  );
+};
+
+export default useMovie;
