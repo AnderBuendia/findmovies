@@ -28,6 +28,13 @@ const theme = extendTheme({
   fonts,
   colors,
   breakpoints,
+  layerStyles: {
+    selected: {
+      rounded: 'full',
+      color: 'blue.800',
+      bgGradient: 'linear(to-r, green.100, green.200)',
+    },
+  },
 });
 
 export default theme;

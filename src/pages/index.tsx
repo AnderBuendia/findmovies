@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Flex, Box, SimpleGrid, Heading } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { QueryClient } from 'react-query';
@@ -29,10 +29,13 @@ const HomePage: React.FC<HomePageProps> = () => {
       description="Find your favourite movies"
       url={MainPaths.INDEX}
     >
-      <Flex direction="row" alignItems="center">
-        <Heading as="h2" px={20}>
-          Trending
-        </Heading>
+      <Flex
+        px={16}
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Heading as="h2">Trending</Heading>
         <Flex
           borderWidth="1px"
           alignItems="center"
@@ -41,16 +44,18 @@ const HomePage: React.FC<HomePageProps> = () => {
           fontWeight="bold"
         >
           <Box
-            bgGradient="linear(to-r, green.100, green.200)"
-            py={1}
             px={6}
-            rounded="full"
-            color="blue.800"
+            py={1}
+            layerStyle={!popularThisWeek && 'selected'}
+            _hover={{ cursor: 'pointer' }}
+            onClick={() => setPopularThisWeek(false)}
           >
             Today
           </Box>
           <Box
-            px={4}
+            px={5}
+            py={1}
+            layerStyle={popularThisWeek && 'selected'}
             _hover={{ cursor: 'pointer' }}
             onClick={() => setPopularThisWeek(true)}
           >
