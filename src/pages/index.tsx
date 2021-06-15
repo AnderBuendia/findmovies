@@ -18,9 +18,13 @@ export type HomePageProps = {
 
 const HomePage: React.FC<HomePageProps> = () => {
   const [popularThisWeek, setPopularThisWeek] = useState(false);
-  const { data, isLoading, error } = useMovies({ popularThisWeek });
+  const { data, isLoading, isFetching, error } = useMovies({ popularThisWeek });
+  const skeletonArray = [...new Array(10)];
 
-  isLoading && <ListSkeleton />;
+  if (isFetching || isLoading) {
+    skeletonArray.map((_, index) => <ListSkeleton key={index} />);
+  }
+
   error && <div>Something went wrong...</div>;
 
   return (
