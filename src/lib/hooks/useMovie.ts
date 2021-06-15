@@ -38,7 +38,7 @@ export const fetchMovieDetail = async (
       release_date: data.release_date,
       rating: data.vote_average,
       runtime: data.runtime,
-      trailer: `https://www.youtube.com/watch?v=${videoKey}`,
+      trailer: `https://www.youtube.com/embed/${videoKey}`,
     };
 
     return modifiedData;

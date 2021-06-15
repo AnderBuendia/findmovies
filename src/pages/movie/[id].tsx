@@ -4,7 +4,7 @@ import { QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import useMovie, { fetchMovieDetail } from '@Lib/hooks/useMovie';
 import { fetchPopularMovies } from '@Lib/hooks/useMovies';
-import MovieDetailContent from '@Components/MovieDetailContent';
+import MovieDetailContent from '@Components/MovieDetail/MovieDetailContent';
 import MainLayout from '@Components/layouts/MainLayout';
 import { MovieDetail } from '@Interfaces/movies/detail.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
@@ -17,11 +17,7 @@ const MovieDetailPage: React.FC<MovieDetailPageProps> = () => {
   const router = useRouter();
   const { id: movieId } = router.query as Record<string, string>;
 
-  console.log('ID', movieId);
   const { data, isLoading, error } = useMovie(movieId);
-
-  console.log('ERROR', error);
-  console.log('DATA', data);
 
   return (
     <MainLayout

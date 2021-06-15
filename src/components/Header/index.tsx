@@ -17,7 +17,7 @@ const Header: FC = () => {
     <HeaderContainer>
       <NextLink href="/" passHref>
         <Link _focus={{ boxShadow: 'none' }}>
-          <LogoIcon width="40px" />
+          <LogoIcon w={9} h={9} />
         </Link>
       </NextLink>
 
