@@ -8,6 +8,7 @@ export interface MovieDetail {
   tagline: string;
   background_image: string;
   poster_image: string;
+  language: string;
   genres: Genres[];
   budget: number;
   homepage: string;
@@ -16,4 +17,15 @@ export interface MovieDetail {
   rating: number;
   runtime: number;
   trailer: string;
+}
+
+export interface DataMovieCast {
+  character: string;
+  name: string;
+  img: string;
+}
+
+export interface DataMovieCastDirector {
+  cast: DataMovieCast[];
+  director: string;
 }

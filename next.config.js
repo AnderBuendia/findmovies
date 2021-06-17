@@ -1,4 +1,5 @@
 module.exports = {
+  webpack5: true,
   env: {
     SITE_URL: process.env.SITE_URL,
   },
@@ -9,9 +10,6 @@ module.exports = {
     API_KEY: process.env.API_KEY,
   },
   images: {
-    domains: ['image.tmdb.org'],
-  },
-  future: {
-    webpack5: true,
+    domains: ['image.tmdb.org', 'www.themoviedb.org'],
   },
 };

@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   Center,
+  Container,
   useDisclosure,
 } from '@chakra-ui/react';
 import CircularScore from '@Components/generic/CircularScore';
@@ -25,93 +26,110 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
     trailer,
     genres,
     runtime,
+    tagline,
     rating,
+    overview,
   } = data;
   const movie_date = new Date(release_date);
 
   return (
     <Box
-      w="full"
-      h="50%"
       bgImage={`linear-gradient(to right, rgba(5.10%, 4.50%, 4.20%, 0.85) 150px, 
         rgba(5.10%, 4.71%, 4.71%, 0.84) 100%), url(${background_image})`}
-      bgPos="center"
       bgRepeat="no-repeat"
       bgSize="cover"
+      py={6}
+      color="white"
     >
-      <Flex
-        direction="row"
-        justifyContent="flex-start"
-        px={[2, 6, 16, 32]}
-        py={6}
-      >
-        <Box
-          _hover={{ opacity: 0.7, cursor: 'pointer' }}
-          position="relative"
-          onClick={onOpen}
-        >
-          <Image
-            borderRadius="lg"
-            objectFit="cover"
-            src={poster_image}
-            alt={title}
-            display="block"
-          />
-          <Center
-            position="absolute"
-            inset="0"
-            h="100%"
-            w="100%"
-            opacity="0"
-            _hover={{ opacity: 1 }}
+      <Container maxW="container.xl">
+        <Flex direction={['column', 'row']} alignItems="center">
+          <Box
+            _hover={{ opacity: 0.7, cursor: 'pointer' }}
+            position="relative"
+            onClick={onOpen}
           >
-            <Text
-              bgColor="black"
-              px={3}
-              rounded="full"
-              color="white"
-              fontSize="2xl"
-              top="2px"
-              boxShadow="dark-lg"
+            <Image borderRadius="lg" src={poster_image} alt={title} />
+
+            <Center
+              position="absolute"
+              inset="0"
+              opacity="0"
+              _hover={{ opacity: 1 }}
             >
-              Play Trailer
-              <span>
-                <PlayIcon ml={2} color="white" />
-              </span>
-            </Text>
-          </Center>
-        </Box>
-        <Flex direction="column" ml={5}>
-          <Text fontSize="3xl" fontWeight="bold" color="white">
-            {title}
-            <span style={{ fontWeight: 'lighter', marginLeft: '4px' }}>
-              ({movie_date.getFullYear()})
-            </span>
-          </Text>
-
-          <Flex direction="row">
-            {genres.map((genre) => (
               <Text
-                py={0.2}
-                px={2}
-                mr={2}
-                mb={2}
+                bgColor="black"
+                px={3}
                 rounded="full"
-                bgColor="blue.900"
-                color="white"
-                boxShadow="lg"
+                fontSize="2xl"
+                top="2px"
+                boxShadow="dark-lg"
               >
-                {genre.name}
+                Play Trailer
+                <span>
+                  <PlayIcon ml={2} />
+                </span>
               </Text>
-            ))}
-          </Flex>
+            </Center>
+          </Box>
 
-          <Flex direction="row" alignItems="center">
-            <CircularScore rating={rating} />
-            <Text color="white">{movie_date.toLocaleDateString()}</Text>
+          <Flex direction="column" ml={[0, 5]}>
+            <Flex
+              direction={['row']}
+              alignItems={['flex-start', 'center']}
+              justifyContent="flex-start"
+              fontSize="3xl"
+            >
+              <Text fontWeight="bold" mr={2}>
+                {title}
+              </Text>
+              <Text fontWeight="thin">({movie_date.getFullYear()})</Text>
+            </Flex>
+
+            <Flex direction="row" fontSize="md">
+              <Text>{movie_date.toLocaleDateString()}</Text>
+              <Text mx={2}>-</Text>
+              <Text>{`${Math.floor(runtime / 60)}h ${runtime % 60}min`}</Text>
+            </Flex>
+
+            <Flex direction={['row']}>
+              {genres.map((genre) => (
+                <Text
+                  key={genre.id}
+                  px={2}
+                  mr={2}
+                  mb={2}
+                  rounded="full"
+                  bgColor="blue.900"
+                  boxShadow="lg"
+                  width="max-content"
+                  fontSize="sm"
+                >
+                  {genre.name}
+                </Text>
+              ))}
+            </Flex>
+
+            <Flex direction="row" alignItems="center" my={2}>
+              <CircularScore rating={rating * 10} />
+              <Text ml={2} w={12} fontWeight="bold" display="inline-block">
+                User Score
+              </Text>
+            </Flex>
+
+            <Text as="i" fontSize="xl" fontWeight="thin" color="gray.300">
+              {tagline}
+            </Text>
+
+            <Text fontSize="xl" fontWeight="bold" mt={2}>
+              Overview
+            </Text>
+            <Text fontSize="sm" width={[340, 350, 500, 700]}>
+              {overview}
+            </Text>
           </Flex>
         </Flex>
-      </Flex>
+      </Container>
+
       <ModalTrailer
         isOpen={isOpen}
         onClose={onClose}

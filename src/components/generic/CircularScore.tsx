@@ -5,20 +5,20 @@ export type CircularScoreProps = {
 };
 
 const CircularScore: React.FC<CircularScoreProps> = ({ rating }) => {
-  let circularColor = 'blue.400';
+  let barColor = 'blue.400';
 
   switch (true) {
     case rating >= 80:
-      circularColor = 'green.400';
+      barColor = 'green.400';
       break;
     case rating >= 50 && rating <= 79:
-      circularColor = 'yellow.400';
+      barColor = 'yellow.400';
       break;
     case rating <= 49:
-      circularColor = 'red.400';
+      barColor = 'red.400';
       break;
     default:
-      circularColor;
+      barColor;
   }
 
   return (
@@ -26,13 +26,13 @@ const CircularScore: React.FC<CircularScoreProps> = ({ rating }) => {
       p={0.5}
       boxShadow="lg"
       trackColor="gray.600"
-      color={circularColor}
+      color={barColor}
       bgColor="blue.800"
       rounded="full"
       value={rating}
       size="60px"
     >
-      <CircularProgressLabel fontWeight="bold" fontSize="sm" color="white">
+      <CircularProgressLabel fontWeight="bold" fontSize="md" color="white">
         {rating}%
       </CircularProgressLabel>
     </CircularProgress>

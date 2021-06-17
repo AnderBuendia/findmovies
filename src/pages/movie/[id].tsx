@@ -3,7 +3,6 @@ import { dehydrate } from 'react-query/hydration';
 import { QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import useMovie, { fetchMovieDetail } from '@Lib/hooks/useMovie';
-import { fetchPopularMovies } from '@Lib/hooks/useMovies';
 import MovieDetailContent from '@Components/MovieDetail/MovieDetailContent';
 import MainLayout from '@Components/layouts/MainLayout';
 import { MovieDetail } from '@Interfaces/movies/detail.interface';
