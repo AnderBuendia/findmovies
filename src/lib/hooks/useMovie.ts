@@ -48,6 +48,8 @@ export const fetchMovieDetail = async (
       rating: data.vote_average,
       runtime: data.runtime,
       trailer: `https://www.youtube.com/embed/${videoKey}`,
+      cast: movieCast.cast,
+      director: movieCast.director,
     };
 
     return modifiedData;

@@ -3,7 +3,7 @@ export interface Genres {
   name: string;
 }
 
-export interface MovieDetail {
+export interface MovieDetail extends DataMovieCastDirector {
   title: string;
   tagline: string;
   background_image: string;

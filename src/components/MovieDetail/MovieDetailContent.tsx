@@ -5,6 +5,8 @@ import {
   Image,
   Center,
   Container,
+  UnorderedList,
+  ListItem,
   useDisclosure,
 } from '@chakra-ui/react';
 import CircularScore from '@Components/generic/CircularScore';
@@ -29,6 +31,8 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
     tagline,
     rating,
     overview,
+    cast,
+    director,
   } = data;
   const movie_date = new Date(release_date);
 
@@ -85,10 +89,15 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
               <Text fontWeight="thin">({movie_date.getFullYear()})</Text>
             </Flex>
 
-            <Flex direction="row" fontSize="md">
-              <Text>{movie_date.toLocaleDateString()}</Text>
-              <Text mx={2}>-</Text>
-              <Text>{`${Math.floor(runtime / 60)}h ${runtime % 60}min`}</Text>
+            <Flex direction="row" fontSize="md" mb={1}>
+              <Text mr={3}>{movie_date.toLocaleDateString()}</Text>
+              <UnorderedList>
+                <ListItem styleType="square">
+                  <Text>{`${Math.floor(runtime / 60)}h ${
+                    runtime % 60
+                  }min`}</Text>
+                </ListItem>
+              </UnorderedList>
             </Flex>
 
             <Flex direction={['row']}>
@@ -116,7 +125,7 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
               </Text>
             </Flex>
 
-            <Text as="i" fontSize="xl" fontWeight="thin" color="gray.300">
+            <Text as="i" fontSize="xl" fontWeight="thin" color="gray.200">
               {tagline}
             </Text>
 
@@ -126,6 +135,10 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
             <Text fontSize="sm" width={[340, 350, 500, 700]}>
               {overview}
             </Text>
+            <Text fontWeight="bold" mt={3}>
+              Director
+            </Text>
+            <Text fontSize="sm">{director}</Text>
           </Flex>
         </Flex>
       </Container>
