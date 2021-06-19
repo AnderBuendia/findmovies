@@ -1,10 +1,6 @@
-import {
-  Box,
-  Image,
-  CircularProgress,
-  CircularProgressLabel,
-} from '@chakra-ui/react';
+import { Box, Text, Image } from '@chakra-ui/react';
 import Link from 'next/link';
+import CircularScore from '@Components/generic/CircularScore';
 import { PopularMovies } from '@Interfaces/movies/popular.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 
@@ -13,50 +9,28 @@ export type PopularMoviesListProps = {
 };
 
 const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
+  const { id, title, poster, rating, votes } = movie;
+
   return (
-    <Link href={`${MainPaths.MOVIE}/${movie.id}`}>
+    <Link href={`${MainPaths.MOVIE}/${id}`}>
       <Box
-        maxW="sm"
         borderWidth="1px"
         borderRadius="lg"
-        overflow="hidden"
         boxShadow="md"
         _hover={{ opacity: 0.7, cursor: 'pointer' }}
       >
-        <Image src={movie.poster} alt={movie.title} />
+        <Image src={poster} alt={title} borderTopRadius="lg" />
 
-        <Box p="6">
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            isTruncated
-            textAlign="center"
-          >
-            {movie.title}
-          </Box>
+        <Box p={6}>
+          <Text fontWeight="bold" isTruncated textAlign="center">
+            {title}
+          </Text>
 
-          <Box
-            d="flex"
-            flexDirection="column"
-            mt="2"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <CircularProgress
-              trackColor="gray.600"
-              color="green.400"
-              value={movie.rating * 10}
-              verticalAlign="none"
-            >
-              <CircularProgressLabel fontWeight="bold" fontSize="sm">
-                {movie.rating * 10}%
-              </CircularProgressLabel>
-            </CircularProgress>
+          <Box d="flex" flexDirection="column" alignItems="center">
+            <CircularScore rating={rating * 10} />
 
-            <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {movie.votes} reviews
+            <Box as="span" mt="2" color="gray.600" fontSize="sm">
+              {votes} reviews
             </Box>
           </Box>
         </Box>

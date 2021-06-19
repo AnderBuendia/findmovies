@@ -15,9 +15,7 @@ const MainLayout: React.FC<HeadProps> = ({
 
       <Flex direction="column">
         <Header />
-        <Flex direction="column" mt={6}>
-          {children}
-        </Flex>
+        <Flex direction="column">{children}</Flex>
       </Flex>
     </>
   );
