@@ -9,11 +9,13 @@ import {
   ListItem,
   Wrap,
   WrapItem,
+  Divider,
   useDisclosure,
 } from '@chakra-ui/react';
 import CircularScore from '@Components/generic/CircularScore';
 import ModalTrailer from '@Components/MovieDetail/ModalTrailer';
 import PlayIcon from '@Components/icons/play-icon';
+import { formatNumbers } from '@Lib/utils/formatCharacters';
 import { MovieDetail } from '@Interfaces/movies/detail.interface';
 
 export type MovieDetailContentProps = {
@@ -35,6 +37,10 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
     overview,
     cast,
     director,
+    language,
+    budget,
+    revenue,
+    status,
   } = data;
   const movie_date = new Date(release_date);
 
@@ -197,6 +203,41 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
             </Box>
           </Box>
         ))}
+      </Flex>
+
+      <Divider
+        orientation="horizontal"
+        mx={20}
+        my={5}
+        w="75%"
+        textAlign="center"
+      />
+
+      <Flex direction={['column', 'row']} w="100%" pb={6} px={6}>
+        <Flex direction="column" w={['100%', '25%']} mb={2}>
+          <Text fontSize="lg" fontWeight="bold">
+            Budget
+          </Text>
+          <Text>{budget ? `$${formatNumbers(budget)}` : '-'}</Text>
+        </Flex>
+        <Flex direction="column" w={['100%', '25%']} mb={2}>
+          <Text fontSize="lg" fontWeight="bold">
+            Revenue
+          </Text>
+          <Text>{revenue ? `$${formatNumbers(revenue)}` : '-'}</Text>
+        </Flex>
+        <Flex direction="column" w={['100%', '25%']} mb={2}>
+          <Text fontSize="lg" fontWeight="bold">
+            Status
+          </Text>
+          <Text>{status}</Text>
+        </Flex>
+        <Flex direction="column" w={['100%', '25%']} mb={2}>
+          <Text fontSize="lg" fontWeight="bold">
+            Original Language
+          </Text>
+          <Text>{language}</Text>
+        </Flex>
       </Flex>
 
       <ModalTrailer

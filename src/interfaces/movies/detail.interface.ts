@@ -17,6 +17,8 @@ export interface MovieDetail extends DataMovieCastDirector {
   rating: number;
   runtime: number;
   trailer: string;
+  revenue: number;
+  status: string;
 }
 
 export interface DataMovieCast {

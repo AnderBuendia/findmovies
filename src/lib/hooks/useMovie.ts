@@ -2,6 +2,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { formatIsoLanguage } from '@Lib/utils/formatCharacters';
 import {
   MovieDetail,
   DataMovieCast,
@@ -16,9 +17,6 @@ export const fetchMovieDetail = async (
   params: QueryMovieDetailType
 ): Promise<MovieDetail> => {
   const [, { id }] = params.queryKey;
-  const languageNames = new (Intl as any).DisplayNames(['en'], {
-    type: 'language',
-  });
 
   try {
     const { data } = await axios.get(
@@ -39,14 +37,16 @@ export const fetchMovieDetail = async (
       tagline: data.tagline,
       background_image: `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${data.backdrop_path}`,
       poster_image: `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${data.poster_path}`,
-      language: languageNames.of(data.original_language),
       genres: data.genres,
-      budget: data.budget,
       homepage: data.homepage,
       overview: data.overview,
       release_date: data.release_date,
       rating: data.vote_average,
       runtime: data.runtime,
+      language: formatIsoLanguage(data.original_language),
+      budget: data.budget,
+      revenue: data.revenue,
+      status: data.status,
       trailer: `https://www.youtube.com/embed/${videoKey}`,
       cast: movieCast.cast,
       director: movieCast.director,
