@@ -33,7 +33,7 @@ const HomePage: React.FC<HomePageProps> = () => {
       description="Find your favourite movies"
       url={MainPaths.INDEX}
     >
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" py={6}>
         <Flex
           direction="row"
           alignItems="center"
