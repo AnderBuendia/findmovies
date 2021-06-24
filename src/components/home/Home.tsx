@@ -1,7 +1,7 @@
 import { Flex, Box, SimpleGrid, Heading, Container } from '@chakra-ui/react';
 import { Dispatch, SetStateAction } from 'react';
 import MainLayout from '@Components/layouts/MainLayout';
-import PopularMoviesList from '@Components/home/PopularMoviesList';
+import DataMoviesList from '@Components/home/DataMoviesList';
 import SearchBar from '@Components/generic/SearchBar';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
@@ -62,7 +62,7 @@ const Home: React.FC<HomeProps> = ({
         <SimpleGrid columns={[1, 2, 4, 5]} gap={4} mt={3}>
           {data &&
             data.map((movie) => (
-              <PopularMoviesList key={movie.id} movie={movie} />
+              <DataMoviesList key={movie.id} movie={movie} />
             ))}
         </SimpleGrid>
       </Container>

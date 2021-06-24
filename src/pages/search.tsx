@@ -1,9 +1,10 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Container, SimpleGrid, Text } from '@chakra-ui/react';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import useSearchMovies, { fetchSearchMovies } from '@Lib/hooks/useSearchMovies';
+import DataMoviesList from '@Components/home/DataMoviesList';
 import MainLayout from '@Components/layouts/MainLayout';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
@@ -13,7 +14,7 @@ export interface SearchPageProps {}
 const SearchPage: React.FC<SearchPageProps> = () => {
   const router = useRouter();
   const { q } = router.query as Record<string, string>;
-  const { data, isLoading, isFetching, error } = useSearchMovies({ q });
+  const { data } = useSearchMovies({ q });
 
   console.log('DATA', data);
   return (
@@ -22,9 +23,17 @@ const SearchPage: React.FC<SearchPageProps> = () => {
       description="Search your favorite movies"
       url={MainPaths.SEARCH}
     >
-      <Box>
-        <Heading>From Search Pâge</Heading>
-      </Box>
+      <Container maxW="container.xl" py={6}>
+        <Text fontSize="xl" fontWeight="bold">
+          Results by {q}
+        </Text>
+        <SimpleGrid columns={[1, 2, 4, 5]} gap={4} mt={3}>
+          {data &&
+            data.map((movie) => (
+              <DataMoviesList key={movie.id} movie={movie} />
+            ))}
+        </SimpleGrid>
+      </Container>
     </MainLayout>
   );
 };

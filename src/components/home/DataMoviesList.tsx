@@ -1,14 +1,14 @@
-import { Box, Text, Image } from '@chakra-ui/react';
+import { Box, Center, Text, Img } from '@chakra-ui/react';
 import Link from 'next/link';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 
-export type PopularMoviesListProps = {
+export type DataMoviesListProps = {
   movie: DataMovies;
 };
 
-const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
+const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
   const { id, title, poster, vote_average, vote_count } = movie;
 
   return (
@@ -19,9 +19,13 @@ const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
         boxShadow="md"
         _hover={{ opacity: 0.7, cursor: 'pointer' }}
       >
-        <Image src={poster} alt={title} borderTopRadius="lg" />
+        {poster ? (
+          <Img src={poster} alt={title} borderTopRadius="lg" />
+        ) : (
+          <Img src="/image-not-found.svg" alt={title} py={16} px={4} />
+        )}
 
-        <Box p={6}>
+        <Box p={6} borderTop="gray 1px solid">
           <Text fontWeight="bold" isTruncated textAlign="center">
             {title}
           </Text>
@@ -39,4 +43,4 @@ const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
   );
 };
 
-export default PopularMoviesList;
+export default DataMoviesList;

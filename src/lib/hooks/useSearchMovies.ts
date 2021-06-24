@@ -28,7 +28,9 @@ export const fetchSearchMovies = async (
     const modifiedData = await data.results.map((result: DataMovies) => ({
       id: result.id,
       title: result['title'],
-      poster: `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`,
+      poster: !result['poster_path']
+        ? null
+        : `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`,
       vote_average: result.vote_average,
       vote_count: result.vote_count,
     }));
