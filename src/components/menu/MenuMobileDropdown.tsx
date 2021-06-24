@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import MenuItem from '@Components/Header/MenuItem';
+import MenuItem from '@Components/menu/MenuItem';
 
 const MenuMobileDropdown: React.FC = () => {
   return (

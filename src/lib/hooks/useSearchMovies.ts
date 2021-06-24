@@ -4,18 +4,15 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
-export type QueryPopularMoviesType = {
-  queryKey: [string, { popularThisWeek: boolean }];
+export type QuerySearchMoviesType = {
+  queryKey: [string, { q: string }];
 };
 
-export const fetchPopularMovies = async (
-  params: QueryPopularMoviesType
-): Promise<DataMovies[]> => {
-  const [, { popularThisWeek }] = params.queryKey;
-
-  const url = `${publicRuntimeConfig.API_MOVIES_URL}trending/movie/${
-    popularThisWeek ? 'week' : 'day'
-  }`;
+export const fetchSearchMovies = async (
+  params: QuerySearchMoviesType
+): Promise<any> => {
+  const [, { q }] = params.queryKey;
+  const url = `${publicRuntimeConfig.API_MOVIES_URL}search/movie`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -23,28 +20,30 @@ export const fetchPopularMovies = async (
         api_key: publicRuntimeConfig.API_KEY,
         language: 'en-US',
         page: 1,
+        query: q,
+        include_adult: false,
       },
     });
 
     const modifiedData = await data.results.map((result: DataMovies) => ({
-      id: result['id'],
+      id: result.id,
       title: result['title'],
       poster: `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`,
-      vote_average: result['vote_average'],
-      vote_count: result['vote_count'],
+      vote_average: result.vote_average,
+      vote_count: result.vote_count,
     }));
 
     return modifiedData;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
-const useMovies = ({ popularThisWeek }: { popularThisWeek: boolean }) => {
+const useSearchMovies = ({ q }: { q: string }) => {
   return useQuery<DataMovies[], Error>(
-    ['popularMovies', { popularThisWeek }],
-    fetchPopularMovies
+    ['searchMovies', { q }],
+    fetchSearchMovies
   );
 };
 
-export default useMovies;
+export default useSearchMovies;

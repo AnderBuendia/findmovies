@@ -1,15 +1,15 @@
 import { Box, Text, Image } from '@chakra-ui/react';
 import Link from 'next/link';
 import CircularScore from '@Components/generic/CircularScore';
-import { PopularMovies } from '@Interfaces/movies/popular.interface';
+import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 
 export type PopularMoviesListProps = {
-  movie: PopularMovies;
+  movie: DataMovies;
 };
 
 const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
-  const { id, title, poster, rating, votes } = movie;
+  const { id, title, poster, vote_average, vote_count } = movie;
 
   return (
     <Link href={`${MainPaths.MOVIE}/${id}`}>
@@ -27,10 +27,10 @@ const PopularMoviesList: React.FC<PopularMoviesListProps> = ({ movie }) => {
           </Text>
 
           <Box d="flex" flexDirection="column" alignItems="center">
-            <CircularScore rating={rating * 10} />
+            <CircularScore vote_average={vote_average * 10} />
 
             <Box as="span" mt="2" color="gray.600" fontSize="sm">
-              {votes} reviews
+              {vote_count} reviews
             </Box>
           </Box>
         </Box>

@@ -7,7 +7,7 @@ import {
   MovieDetail,
   DataMovieCast,
   DataMovieCastDirector,
-} from '@Interfaces/movies/detail.interface';
+} from '@Interfaces/movies/detail-movie.interface';
 
 export type QueryMovieDetailType = {
   queryKey: [string, { id: string }];
@@ -41,7 +41,7 @@ export const fetchMovieDetail = async (
       homepage: data.homepage,
       overview: data.overview,
       release_date: data.release_date,
-      rating: data.vote_average,
+      vote_average: data.vote_average,
       runtime: data.runtime,
       language: formatIsoLanguage(data.original_language),
       budget: data.budget,
@@ -105,7 +105,7 @@ export const fetchMovieCast = async (
   }
 };
 
-const useMovie = (movieId: string) => {
+const useMovie = ({ movieId }: { movieId: string }) => {
   return useQuery<MovieDetail, Error>(
     ['movieDetail', { id: movieId }],
     fetchMovieDetail
