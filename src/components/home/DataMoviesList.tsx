@@ -1,8 +1,11 @@
-import { Box, Center, Text, Img } from '@chakra-ui/react';
+import { Box, Text, Img, Center } from '@chakra-ui/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
+import notAvailable from '../../../public/not-available.jpg';
+import React from 'react';
 
 export type DataMoviesListProps = {
   movie: DataMovies;
@@ -22,7 +25,9 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
         {poster ? (
           <Img src={poster} alt={title} borderTopRadius="lg" />
         ) : (
-          <Img src="/image-not-found.svg" alt={title} py={16} px={4} />
+          <Center bgColor="gray.100" py={16} px={2}>
+            <Image src={notAvailable} alt={title} />
+          </Center>
         )}
 
         <Box p={6} borderTop="gray 1px solid">

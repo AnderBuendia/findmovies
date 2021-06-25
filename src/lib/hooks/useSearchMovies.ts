@@ -10,7 +10,7 @@ export type QuerySearchMoviesType = {
 
 export const fetchSearchMovies = async (
   params: QuerySearchMoviesType
-): Promise<any> => {
+): Promise<DataMovies[]> => {
   const [, { q }] = params.queryKey;
   const url = `${publicRuntimeConfig.API_MOVIES_URL}search/movie`;
 
@@ -20,7 +20,7 @@ export const fetchSearchMovies = async (
         api_key: publicRuntimeConfig.API_KEY,
         language: 'en-US',
         page: 1,
-        query: q,
+        query: q.toLowerCase(),
         include_adult: false,
       },
     });

@@ -4,35 +4,29 @@ import { SearchIcon } from '@chakra-ui/icons';
 import Router from 'next/router';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 
-export interface SearchBarProps {}
-
-const SearchBar: React.FC<SearchBarProps> = () => {
+const SearchBar: React.FC = () => {
   const [value, setValue] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  const searchMovies = (e, value) => {
+  const searchMovies = (e: React.FormEvent<HTMLFormElement>, value: string) => {
     e.preventDefault();
 
     if (value.trim() === '') return;
 
     Router.push({
-      pathname: MainPaths.SEARCH,
+      pathname: MainPaths.SEARCH_MOVIES,
       query: { q: value },
     });
   };
 
   return (
-    <Box
-      marginLeft={['20px', '150px', '200px', '270px', '300px']}
-      width={['80%', '40%']}
-      mb={5}
-    >
+    <Box w={['89%', '40%']} ml={['0px', '160px', '190px', '260px']}>
       <form onSubmit={(e) => searchMovies(e, value)}>
         <Input
-          borderColor="gray.700"
+          borderColor="gray.500"
           borderRightRadius="0"
           value={value}
           onChange={handleChange}
@@ -41,8 +35,8 @@ const SearchBar: React.FC<SearchBarProps> = () => {
         <Button
           type="submit"
           borderLeftRadius="0"
-          colorScheme="gray.700"
-          bgColor="gray.700"
+          colorScheme="gray.500"
+          bgColor="gray.500"
           variant="outline"
           position="absolute"
         >

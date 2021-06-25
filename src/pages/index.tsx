@@ -13,7 +13,9 @@ export type HomePageProps = {
 
 const HomePage: React.FC<HomePageProps> = () => {
   const [popularThisWeek, setPopularThisWeek] = useState<boolean>(false);
-  const { data, isLoading, isFetching, error } = useMovies({ popularThisWeek });
+  const { findPopularMovies } = useMovies({ popularThisWeek });
+  const { data, isLoading, isFetching, error } = findPopularMovies;
+
   const skeletonArray = [...new Array(10)];
 
   if (isFetching || isLoading) {

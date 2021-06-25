@@ -1,5 +1,6 @@
 export enum MainPaths {
   INDEX = '/',
   MOVIE = '/movie',
-  SEARCH = '/search',
+  SEARCH_MOVIES = '/search/movies',
+  SEARCH_GENRES = '/search/genres',
 }

@@ -2,7 +2,8 @@ import { Flex, Box, SimpleGrid, Heading, Container } from '@chakra-ui/react';
 import { Dispatch, SetStateAction } from 'react';
 import MainLayout from '@Components/layouts/MainLayout';
 import DataMoviesList from '@Components/home/DataMoviesList';
-import SearchBar from '@Components/generic/SearchBar';
+import SearchBar from '@Components/search/SearchBar';
+import GenresList from '@Components/search/GenresList';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
@@ -25,6 +26,7 @@ const Home: React.FC<HomeProps> = ({
     >
       <Container maxW="container.xl" py={6}>
         <SearchBar />
+        <GenresList />
         <Flex
           direction="row"
           alignItems="center"
