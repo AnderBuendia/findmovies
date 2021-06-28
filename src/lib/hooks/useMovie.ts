@@ -7,7 +7,7 @@ import {
   MovieDetail,
   DataMovieCast,
   DataMovieCastDirector,
-} from '@Interfaces/movies/detail.interface';
+} from '@Interfaces/movies/detail-movie.interface';
 
 export type QueryMovieDetailType = {
   queryKey: [string, { id: string }];
@@ -41,7 +41,7 @@ export const fetchMovieDetail = async (
       homepage: data.homepage,
       overview: data.overview,
       release_date: data.release_date,
-      rating: data.vote_average,
+      vote_average: data.vote_average,
       runtime: data.runtime,
       language: formatIsoLanguage(data.original_language),
       budget: data.budget,
@@ -96,7 +96,9 @@ export const fetchMovieCast = async (
       .map((person) => ({
         character: person['character'],
         name: person['name'],
-        img: `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`,
+        img: person['profile_path']
+          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`
+          : null,
       }));
 
     return { cast: modifiedDataCast, director: director[0].name };
@@ -105,7 +107,7 @@ export const fetchMovieCast = async (
   }
 };
 
-const useMovie = (movieId: string) => {
+const useMovie = ({ movieId }: { movieId: string }) => {
   return useQuery<MovieDetail, Error>(
     ['movieDetail', { id: movieId }],
     fetchMovieDetail

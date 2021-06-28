@@ -14,7 +14,7 @@ export interface MovieDetail extends DataMovieCastDirector {
   homepage: string;
   overview: string;
   release_date: string;
-  rating: number;
+  vote_average: number;
   runtime: number;
   trailer: string;
   revenue: number;

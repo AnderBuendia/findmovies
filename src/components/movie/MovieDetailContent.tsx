@@ -13,10 +13,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import CircularScore from '@Components/generic/CircularScore';
-import ModalTrailer from '@Components/MovieDetail/ModalTrailer';
+import ModalTrailer from '@Components/movie/ModalTrailer';
 import PlayIcon from '@Components/icons/play-icon';
 import { formatNumbers } from '@Lib/utils/formatCharacters';
-import { MovieDetail } from '@Interfaces/movies/detail.interface';
+import { MovieDetail } from '@Interfaces/movies/detail-movie.interface';
 
 export type MovieDetailContentProps = {
   data: MovieDetail;
@@ -33,7 +33,7 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
     genres,
     runtime,
     tagline,
-    rating,
+    vote_average,
     overview,
     cast,
     director,
@@ -43,6 +43,8 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
     status,
   } = data;
   const movie_date = new Date(release_date);
+
+  console.log(cast);
 
   return (
     <>
@@ -133,7 +135,7 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
               </Flex>
 
               <Flex direction="row" alignItems="center" mt={3} mb={2}>
-                <CircularScore rating={rating * 10} />
+                <CircularScore vote_average={vote_average * 10} />
                 <Text ml={2} w={12} fontWeight="bold" display="inline-block">
                   User Score
                 </Text>
@@ -190,7 +192,7 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
           >
             <Image
               objectFit="cover"
-              src={person.img}
+              src={person.img ? person.img : '/not-available.jpg'}
               alt={person.name}
               borderTopRadius="lg"
             />

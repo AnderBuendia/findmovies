@@ -7,7 +7,8 @@ const popularMoviesProps = {
   id: 1,
   title: 'Test Title',
   poster: 'Test Poster',
-  rating: 10,
+  vote_average: 10,
+  vote_count: 23,
 };
 
 describe('Initial tests', () => {
