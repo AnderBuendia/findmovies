@@ -44,6 +44,8 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
   } = data;
   const movie_date = new Date(release_date);
 
+  console.log(cast);
+
   return (
     <>
       <Box
@@ -190,7 +192,7 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
           >
             <Image
               objectFit="cover"
-              src={person.img}
+              src={person.img ? person.img : '/not-available.jpg'}
               alt={person.name}
               borderTopRadius="lg"
             />

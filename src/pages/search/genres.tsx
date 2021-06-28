@@ -11,10 +11,10 @@ import { fetchMoviesByGenre } from '@Lib/hooks/useSearchGenre';
 
 const SearchGenresPage: React.FC = () => {
   const router = useRouter();
-  const { q } = router.query as Record<string, string>;
-  const { data, isLoading } = useSearchGenre({ q });
+  const { q, name } = router.query as Record<string, string>;
+  const { data, error } = useSearchGenre({ q });
 
-  console.log('DATAGENRES', data);
+  error && <div>Something went wrong...</div>;
 
   return (
     <MainLayout
@@ -22,7 +22,7 @@ const SearchGenresPage: React.FC = () => {
       description="Search your favorite movies by genre"
       url={MainPaths.SEARCH_GENRES}
     >
-      <MoviesResultsList data={data} q={q} />
+      <MoviesResultsList data={data} q={name} />
     </MainLayout>
   );
 };

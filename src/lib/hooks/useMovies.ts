@@ -56,7 +56,7 @@ export const fetchGenres = async (): Promise<ListOfGenres[]> => {
       }
     );
 
-    const modifiedData = data.genres.slice(0, 6).map((genre) => ({
+    const modifiedData = data.genres.slice(0, 8).map((genre) => ({
       id: genre['id'],
       name: genre['name'],
     }));

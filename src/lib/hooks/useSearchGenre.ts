@@ -23,7 +23,17 @@ export const fetchMoviesByGenre = async (
       }
     );
 
-    console.log('DATA HOOK', data);
+    const modifiedData = await data.results.map((result: DataMovies) => ({
+      id: result.id,
+      title: result['title'],
+      poster: result['poster_path']
+        ? `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`
+        : null,
+      vote_average: result.vote_average,
+      vote_count: result.vote_count,
+    }));
+
+    return modifiedData;
   } catch (error) {
     console.log(error.message);
   }

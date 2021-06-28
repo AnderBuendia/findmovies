@@ -23,21 +23,22 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Box w={['89%', '40%']} ml={['0px', '160px', '190px', '260px']}>
+    <Box m="auto" maxW="400px">
       <form onSubmit={(e) => searchMovies(e, value)}>
         <Input
+          w="89%"
           borderColor="gray.500"
           borderRightRadius="0"
           value={value}
+          placeholder="Search..."
           onChange={handleChange}
           size="md"
         />
         <Button
+          w="3%"
           type="submit"
           borderLeftRadius="0"
-          colorScheme="gray.500"
           bgColor="gray.500"
-          variant="outline"
           position="absolute"
         >
           <SearchIcon color="white" w={5} h={5} />

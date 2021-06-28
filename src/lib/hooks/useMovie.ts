@@ -96,7 +96,9 @@ export const fetchMovieCast = async (
       .map((person) => ({
         character: person['character'],
         name: person['name'],
-        img: `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`,
+        img: person['profile_path']
+          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`
+          : null,
       }));
 
     return { cast: modifiedDataCast, director: director[0].name };

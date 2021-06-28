@@ -29,8 +29,8 @@ export const fetchSearchMovies = async (
       id: result.id,
       title: result['title'],
       poster: !result['poster_path']
-        ? null
-        : `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`,
+        ? `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`
+        : null,
       vote_average: result.vote_average,
       vote_count: result.vote_count,
     }));

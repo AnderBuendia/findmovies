@@ -25,9 +25,9 @@ const Header: FC = () => {
         <Flex display={['none', 'none', 'flex', 'flex']}>
           <MenuItem to="/">Home</MenuItem>
 
-          <MenuItem to="/about">About</MenuItem>
+          <MenuItem to="#">About</MenuItem>
 
-          <MenuItem to="/contact">Contact</MenuItem>
+          <MenuItem to="#">Contact</MenuItem>
         </Flex>
 
         <IconButton
