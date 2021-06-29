@@ -1,0 +1,36 @@
+import { Box } from '@chakra-ui/react';
+import { Dispatch, SetStateAction } from 'react';
+import { Dates } from '@Enums/heading/dates.enum';
+
+export type SelectorDateProps = {
+  popularDate: string;
+  handlePopularDate: Dispatch<SetStateAction<string>>;
+  dateTitle: string;
+};
+
+const DATE_TITLE = {
+  [Dates.TODAY]: 'Today',
+  [Dates.THIS_WEEK]: 'This Week',
+};
+
+const SelectorDate: React.FC<SelectorDateProps> = ({
+  popularDate,
+  handlePopularDate,
+  dateTitle,
+}) => {
+  const headingDateTitle = DATE_TITLE[dateTitle] || 'Today';
+
+  return (
+    <Box
+      px={5}
+      py={1}
+      layerStyle={popularDate === dateTitle ? 'selected' : null}
+      _hover={{ cursor: 'pointer' }}
+      onClick={() => handlePopularDate(dateTitle)}
+    >
+      {headingDateTitle}
+    </Box>
+  );
+};
+
+export default SelectorDate;

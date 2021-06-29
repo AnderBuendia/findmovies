@@ -1,10 +1,11 @@
+import { Text } from '@chakra-ui/react';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import useSearchMovies, { fetchSearchMovies } from '@Lib/hooks/useSearchMovies';
 import MainLayout from '@Components/layouts/MainLayout';
-import MoviesResultsList from '@Components/search/MoviesResultsList';
+import MoviesList from '@Components/movies/MoviesList';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
@@ -19,7 +20,11 @@ const SearchMoviesPage: React.FC = () => {
       description="Search your favorite movies"
       url={MainPaths.SEARCH_MOVIES}
     >
-      <MoviesResultsList data={data} q={q} />
+      <MoviesList data={data}>
+        <Text casing="capitalize" fontSize="xl" fontWeight="bold">
+          Results by {q}
+        </Text>
+      </MoviesList>
     </MainLayout>
   );
 };
