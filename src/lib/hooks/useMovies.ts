@@ -6,17 +6,15 @@ import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { ListOfGenres } from '@Interfaces/movies/genres.interface';
 
 export type QueryPopularMoviesType = {
-  queryKey: [string, { popularThisWeek: boolean }];
+  queryKey: [string, { popularDate: string }];
 };
 
 export const fetchPopularMovies = async (
   params: QueryPopularMoviesType
 ): Promise<DataMovies[]> => {
-  const [, { popularThisWeek }] = params.queryKey;
+  const [, { popularDate }] = params.queryKey;
 
-  const url = `${publicRuntimeConfig.API_MOVIES_URL}trending/movie/${
-    popularThisWeek ? 'week' : 'day'
-  }`;
+  const url = `${publicRuntimeConfig.API_MOVIES_URL}trending/movie/${popularDate}`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -67,13 +65,9 @@ export const fetchGenres = async (): Promise<ListOfGenres[]> => {
   }
 };
 
-const useMovies = ({
-  popularThisWeek = false,
-}: {
-  popularThisWeek?: boolean;
-}) => {
+const useMovies = ({ popularDate = 'day' }: { popularDate?: string }) => {
   const findPopularMovies = useQuery<DataMovies[], Error>(
-    ['popularMovies', { popularThisWeek }],
+    ['popularMovies', { popularDate }],
     fetchPopularMovies
   );
 

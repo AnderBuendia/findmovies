@@ -1,6 +1,6 @@
-import { Box, Text, Img, Center } from '@chakra-ui/react';
+import { Box, Text, Img as ChakraImg, Center } from '@chakra-ui/react';
 import Link from 'next/link';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
@@ -23,10 +23,10 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
         _hover={{ opacity: 0.7, cursor: 'pointer' }}
       >
         {poster ? (
-          <Img src={poster} alt={title} borderTopRadius="lg" />
+          <ChakraImg src={poster} alt={title} borderTopRadius="lg" />
         ) : (
           <Center bgColor="gray.100" py={16} px={2}>
-            <Image src={notAvailable} alt={title} />
+            <NextImage src={notAvailable} alt={title} />
           </Center>
         )}
 
