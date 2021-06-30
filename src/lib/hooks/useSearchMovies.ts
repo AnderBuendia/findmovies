@@ -12,7 +12,7 @@ export const fetchSearchMovies = async (
   params: QuerySearchMoviesType
 ): Promise<DataMovies[]> => {
   const [, { q }] = params.queryKey;
-  const url = `${publicRuntimeConfig.API_MOVIES_URL}search/movie`;
+  const url = `${process.env.NEXT_PUBLIC_API_MOVIES_URL}search/movie`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -29,7 +29,7 @@ export const fetchSearchMovies = async (
       id: result.id,
       title: result['title'],
       poster: result['poster_path']
-        ? `${publicRuntimeConfig.POSTER_URL}${result['poster_path']}`
+        ? `${process.env.NEXT_PUBLIC_POSTER_URL}${result['poster_path']}`
         : null,
       vote_average: result.vote_average,
       vote_count: result.vote_count,

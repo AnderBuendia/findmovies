@@ -1,11 +1,7 @@
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 const HeaderContainer: React.FC = ({ children }) => {
-  const bgColor = useColorModeValue(
-    'linear(to-r, purple.50, cyan.50)',
-    'gray.500'
-  );
-
+  const bgColor = useColorModeValue('teal.50', 'gray.700');
   const textColor = useColorModeValue('gray.600', 'gray.400');
 
   return (
@@ -18,7 +14,7 @@ const HeaderContainer: React.FC = ({ children }) => {
       px={6}
       py={2}
       boxShadow="md"
-      bgGradient={bgColor}
+      bgColor={bgColor}
       color={textColor}
     >
       {children}
