@@ -2,10 +2,10 @@ import { useColorMode, Flex, Button, IconButton, Link } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { FC, useState } from 'react';
 import NextLink from 'next/link';
-import HeaderContainer from '@Components/Header/HeaderContainer';
-import MenuMobileDropdown from '@Components/Header/MenuMobileDropdown';
+import HeaderContainer from '@Components/menu/HeaderContainer';
+import MenuMobileDropdown from '@Components/menu/MenuMobileDropdown';
 import LogoIcon from '@Components/icons/logo-icon';
-import MenuItem from '@Components/Header/MenuItem';
+import MenuItem from '@Components/menu/MenuItem';
 
 const Header: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,9 +25,9 @@ const Header: FC = () => {
         <Flex display={['none', 'none', 'flex', 'flex']}>
           <MenuItem to="/">Home</MenuItem>
 
-          <MenuItem to="/about">About</MenuItem>
+          <MenuItem to="#">About</MenuItem>
 
-          <MenuItem to="/contact">Contact</MenuItem>
+          <MenuItem to="#">Contact</MenuItem>
         </Flex>
 
         <IconButton

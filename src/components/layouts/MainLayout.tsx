@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import Head from '@Components/generic/Head';
-import Header from '@Components/Header';
+import Header from '@Components/menu';
 import { HeadProps } from '@Interfaces/props/head-props.interface';
 
 const MainLayout: React.FC<HeadProps> = ({

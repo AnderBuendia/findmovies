@@ -2,20 +2,12 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { PopularMovies } from '@Interfaces/movies/popular.interface';
-
-export type QueryPopularMoviesType = {
-  queryKey: [string, { popularThisWeek: boolean }];
-};
+import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
 export const fetchPopularMovies = async (
-  params: QueryPopularMoviesType
-): Promise<PopularMovies[]> => {
-  const [, { popularThisWeek }] = params.queryKey;
-
-  const url = `${publicRuntimeConfig.API_MOVIES_URL}/trending/movie/${
-    popularThisWeek ? 'week' : 'day'
-  }`;
+  popularDate: string
+): Promise<DataMovies[]> => {
+  const url = `${process.env.NEXT_PUBLIC_API_MOVIES_URL}trending/movie/${popularDate}`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -26,12 +18,14 @@ export const fetchPopularMovies = async (
       },
     });
 
-    const modifiedData: PopularMovies[] = data['results'].map((result) => ({
+    const modifiedData = await data.results.map((result: DataMovies) => ({
       id: result['id'],
       title: result['title'],
-      poster: publicRuntimeConfig.POSTER_URL + result['poster_path'],
-      rating: result['vote_average'],
-      votes: result['vote_count'],
+      poster: !result['poster_path']
+        ? null
+        : `${process.env.NEXT_PUBLIC_POSTER_URL}${result['poster_path']}`,
+      vote_average: result['vote_average'],
+      vote_count: result['vote_count'],
     }));
 
     return modifiedData;
@@ -40,10 +34,9 @@ export const fetchPopularMovies = async (
   }
 };
 
-const useMovies = ({ popularThisWeek }: { popularThisWeek: boolean }) => {
-  return useQuery<PopularMovies[], Error>(
-    ['popularMovies', { popularThisWeek }],
-    fetchPopularMovies
+const useMovies = ({ popularDate = 'day' }: { popularDate?: string }) => {
+  return useQuery<DataMovies[], Error>(['popularMovies', { popularDate }], () =>
+    fetchPopularMovies(popularDate)
   );
 };
 

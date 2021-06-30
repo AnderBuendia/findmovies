@@ -2,11 +2,12 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { formatIsoLanguage } from '@Lib/utils/formatCharacters';
 import {
   MovieDetail,
   DataMovieCast,
   DataMovieCastDirector,
-} from '@Interfaces/movies/detail.interface';
+} from '@Interfaces/movies/detail-movie.interface';
 
 export type QueryMovieDetailType = {
   queryKey: [string, { id: string }];
@@ -16,13 +17,10 @@ export const fetchMovieDetail = async (
   params: QueryMovieDetailType
 ): Promise<MovieDetail> => {
   const [, { id }] = params.queryKey;
-  const languageNames = new (Intl as any).DisplayNames(['en'], {
-    type: 'language',
-  });
 
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${id}?`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${id}?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -39,14 +37,16 @@ export const fetchMovieDetail = async (
       tagline: data.tagline,
       background_image: `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${data.backdrop_path}`,
       poster_image: `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${data.poster_path}`,
-      language: languageNames.of(data.original_language),
       genres: data.genres,
-      budget: data.budget,
       homepage: data.homepage,
       overview: data.overview,
       release_date: data.release_date,
-      rating: data.vote_average,
+      vote_average: data.vote_average,
       runtime: data.runtime,
+      language: formatIsoLanguage(data.original_language),
+      budget: data.budget,
+      revenue: data.revenue,
+      status: data.status,
       trailer: `https://www.youtube.com/embed/${videoKey}`,
       cast: movieCast.cast,
       director: movieCast.director,
@@ -63,7 +63,7 @@ export const fetchMovieDetailTrailer = async (
 ): Promise<string> => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}/videos?`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/videos?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -82,7 +82,7 @@ export const fetchMovieCast = async (
 ): Promise<DataMovieCastDirector> => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}/credits`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/credits`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -96,7 +96,9 @@ export const fetchMovieCast = async (
       .map((person) => ({
         character: person['character'],
         name: person['name'],
-        img: `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`,
+        img: person['profile_path']
+          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`
+          : null,
       }));
 
     return { cast: modifiedDataCast, director: director[0].name };
@@ -105,7 +107,7 @@ export const fetchMovieCast = async (
   }
 };
 
-const useMovie = (movieId: string) => {
+const useMovie = ({ movieId }: { movieId: string }) => {
   return useQuery<MovieDetail, Error>(
     ['movieDetail', { id: movieId }],
     fetchMovieDetail

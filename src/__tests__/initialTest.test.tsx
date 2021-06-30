@@ -1,26 +1,42 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { Wrapper } from '../__mocks__/fileMock';
 import HomePage from '@Pages/index';
-import MockTheme from '../__mocks__/fileMock';
+import useMovies from '@Lib/hooks/useMovies';
+import useGenres from '@Lib/hooks/useGenres';
 
 const popularMoviesProps = {
   id: 1,
   title: 'Test Title',
   poster: 'Test Poster',
-  rating: 10,
+  vote_average: 10,
+  vote_count: 23,
 };
 
-describe('Initial tests', () => {
-  test('Check Home', () => {
-    render(
-      <MockTheme>
-        <HomePage popularMovies={[popularMoviesProps]} />
-      </MockTheme>
-    );
+const mockedUseMovies = useMovies as jest.Mock<any>;
+const mockedUseGenres = useGenres as jest.Mock<any>;
 
-    const indexHeading = screen.getByRole('heading', {
-      name: /title/i,
-    });
-    expect(indexHeading).toBeInTheDocument();
+jest.mock('@Lib/hooks/useMovies');
+jest.mock('@Lib/hooks/useGenres');
+
+describe('Should render the app without crashing', () => {
+  beforeEach(() => {
+    mockedUseMovies.mockImplementation(() => ({ isLoading: true }));
+    mockedUseGenres.mockImplementation(() => ({ isLoading: true }));
   });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('Renders without crashing', () => {
+    render(<HomePage />);
+  });
+
+  // it('Should show trending on home page', async () => {
+
+  //   // const indexHeading = screen.getByRole('heading', {
+  //   //   name: /Trending/i,
+  //   // });
+
+  //   // expect(indexHeading).toBeInTheDocument();
+  // });
 });

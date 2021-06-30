@@ -1,20 +1,20 @@
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 
 export type CircularScoreProps = {
-  rating: number;
+  vote_average: number;
 };
 
-const CircularScore: React.FC<CircularScoreProps> = ({ rating }) => {
+const CircularScore: React.FC<CircularScoreProps> = ({ vote_average }) => {
   let barColor = 'blue.400';
 
   switch (true) {
-    case rating >= 80:
+    case vote_average >= 80:
       barColor = 'green.400';
       break;
-    case rating >= 50 && rating <= 79:
+    case vote_average >= 50 && vote_average <= 79:
       barColor = 'yellow.400';
       break;
-    case rating <= 49:
+    case vote_average <= 49:
       barColor = 'red.400';
       break;
     default:
@@ -29,11 +29,11 @@ const CircularScore: React.FC<CircularScoreProps> = ({ rating }) => {
       color={barColor}
       bgColor="blue.800"
       rounded="full"
-      value={rating}
+      value={vote_average}
       size="60px"
     >
       <CircularProgressLabel fontWeight="bold" fontSize="md" color="white">
-        {rating}%
+        {vote_average}%
       </CircularProgressLabel>
     </CircularProgress>
   );
