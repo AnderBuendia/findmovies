@@ -1,10 +1,10 @@
 import { Box, Text, Img as ChakraImg, Center } from '@chakra-ui/react';
 import Link from 'next/link';
-import NextImage from 'next/image';
+// import NextImage from 'next/image';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
-import notAvailable from '../../../public/not-available.jpg';
+// import notAvailable from '../../../public/not-available.jpg';
 import React from 'react';
 
 export type DataMoviesListProps = {
@@ -22,13 +22,13 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
         boxShadow="md"
         _hover={{ opacity: 0.7, cursor: 'pointer' }}
       >
-        {poster ? (
+        {/* {poster ? (
           <ChakraImg src={poster} alt={title} borderTopRadius="lg" />
         ) : (
           <Center bgColor="gray.100" py={16} px={2}>
             <NextImage src={notAvailable} alt={title} />
           </Center>
-        )}
+        )} */}
 
         <Box p={6} borderTop="gray 1px solid">
           <Text fontWeight="bold" isTruncated textAlign="center">

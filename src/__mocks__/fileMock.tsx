@@ -1,11 +1,11 @@
-import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import customTheme from '@Lib/utils/theme';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-export default function MockTheme({ children }) {
-  return (
-    <ChakraProvider resetCSS theme={customTheme}>
-      {children}
-    </ChakraProvider>
-  );
-}
+const queryClient = new QueryClient();
+
+export const Wrapper = ({ children }) => (
+  <ChakraProvider resetCSS theme={customTheme}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </ChakraProvider>
+);

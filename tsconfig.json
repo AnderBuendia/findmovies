@@ -28,7 +28,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/__mocks__/fileMock.ts"
+    "src/__mocks__/fileMock.ts",
+    "setupTests.js"
   ],
   "exclude": ["node_modules"]
 }

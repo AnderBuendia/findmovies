@@ -20,7 +20,7 @@ export const fetchMovieDetail = async (
 
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${id}?`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${id}?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -63,7 +63,7 @@ export const fetchMovieDetailTrailer = async (
 ): Promise<string> => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}/videos?`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/videos?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -82,7 +82,7 @@ export const fetchMovieCast = async (
 ): Promise<DataMovieCastDirector> => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_MOVIES_URL}movie/${movieId}/credits`,
+      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/credits`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,

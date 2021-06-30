@@ -1,11 +1,10 @@
 import { Flex, Text, Skeleton } from '@chakra-ui/react';
 import Link from 'next/link';
-import useMovies from '@Lib/hooks/useMovies';
+import useGenres from '@Lib/hooks/useGenres';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 
 const GenresList: React.FC = () => {
-  const { findGenres } = useMovies({});
-  const { data, isLoading, error } = findGenres;
+  const { data, isLoading, error } = useGenres();
 
   if (isLoading) {
     <Skeleton height="20px" />;
