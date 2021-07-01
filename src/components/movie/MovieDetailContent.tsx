@@ -17,6 +17,7 @@ import ModalTrailer from '@Components/movie/ModalTrailer';
 import PlayIcon from '@Components/icons/play-icon';
 import { formatNumbers } from '@Lib/utils/formatCharacters';
 import { MovieDetail } from '@Interfaces/movies/detail-movie.interface';
+import ImageNotFoundIcon from '@Components/icons/image-not-found';
 
 export type MovieDetailContentProps = {
   data: MovieDetail;
@@ -190,12 +191,16 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
             w={140}
             ml={6}
           >
-            <Image
-              objectFit="cover"
-              src={person.img ? person.img : '/not-available.jpg'}
-              alt={person.name}
-              borderTopRadius="lg"
-            />
+            {person.img ? (
+              <Image
+                objectFit="cover"
+                src={person.img}
+                alt={person.name}
+                borderTopRadius="lg"
+              />
+            ) : (
+              <ImageNotFoundIcon ml={18} width="100px" height="175px" />
+            )}
 
             <Box textAlign="left" py={4} px={2}>
               <Text fontSize="sm" fontWeight="bold">

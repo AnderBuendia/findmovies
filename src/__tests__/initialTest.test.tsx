@@ -31,6 +31,12 @@ describe('Should render the app without crashing', () => {
     render(<HomePage />);
   });
 
+  it('Display loading elements', () => {
+    const { getByTestId } = render(<HomePage />);
+
+    expect(getByTestId('load-skeleton')).toBeVisible();
+  });
+
   // it('Should show trending on home page', async () => {
 
   //   // const indexHeading = screen.getByRole('heading', {
