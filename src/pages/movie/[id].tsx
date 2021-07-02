@@ -32,10 +32,10 @@ const MovieDetailPage: React.FC<MovieDetailPageProps> = () => {
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
+  const { id } = ctx.params as Record<string, string>;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<MovieDetail>(
-    ['movieDetail', { id: ctx.params.id }],
-    fetchMovieDetail
+  await queryClient.prefetchQuery<MovieDetail>(['movieDetail', { id }], () =>
+    fetchMovieDetail(id)
   );
 
   return {

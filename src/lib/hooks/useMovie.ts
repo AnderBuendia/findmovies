@@ -9,15 +9,7 @@ import {
   DataMovieCastDirector,
 } from '@Interfaces/movies/detail-movie.interface';
 
-export type QueryMovieDetailType = {
-  queryKey: [string, { id: string }];
-};
-
-export const fetchMovieDetail = async (
-  params: QueryMovieDetailType
-): Promise<MovieDetail> => {
-  const [, { id }] = params.queryKey;
-
+export const fetchMovieDetail = async (id: string): Promise<MovieDetail> => {
   try {
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${id}?`,
@@ -108,9 +100,8 @@ export const fetchMovieCast = async (
 };
 
 const useMovie = ({ movieId }: { movieId: string }) => {
-  return useQuery<MovieDetail, Error>(
-    ['movieDetail', { id: movieId }],
-    fetchMovieDetail
+  return useQuery<MovieDetail, Error>(['movieDetail', { id: movieId }], () =>
+    fetchMovieDetail(movieId)
   );
 };
 

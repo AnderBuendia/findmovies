@@ -35,8 +35,12 @@ const HomePage: React.FC = () => {
   }
 
   if (isError) {
-    <div>{error?.message}</div>;
+    return <div>{error?.message}</div>;
   }
+
+  const handlePopularDate = (dateTitle: string) => {
+    setPopularDate(dateTitle);
+  };
 
   return (
     <MainLayout
@@ -47,7 +51,7 @@ const HomePage: React.FC = () => {
       <HomeLayout
         data={data}
         popularDate={popularDate}
-        handlePopularDate={setPopularDate}
+        handlePopularDate={handlePopularDate}
       />
     </MainLayout>
   );

@@ -4,14 +4,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
-export type QuerySearchMoviesType = {
-  queryKey: [string, { q: string }];
-};
-
-export const fetchSearchMovies = async (
-  params: QuerySearchMoviesType
-): Promise<DataMovies[]> => {
-  const [, { q }] = params.queryKey;
+export const fetchSearchMovies = async (q: string): Promise<DataMovies[]> => {
   const url = `${process.env.NEXT_PUBLIC_API_MOVIES_URL}search/movie`;
 
   try {
@@ -42,9 +35,8 @@ export const fetchSearchMovies = async (
 };
 
 const useSearchMovies = ({ q }: { q: string }) => {
-  return useQuery<DataMovies[], Error>(
-    ['searchMovies', { q }],
-    fetchSearchMovies
+  return useQuery<DataMovies[], Error>(['searchMovies', { q }], () =>
+    fetchSearchMovies(q)
   );
 };
 

@@ -34,10 +34,10 @@ const SearchGenresPage: React.FC = () => {
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
+  const { q } = ctx.query as Record<string, string>;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<DataMovies[]>(
-    ['moviesByGenre', { q: ctx.query.q }],
-    fetchMoviesByGenre
+  await queryClient.prefetchQuery<DataMovies[]>(['moviesByGenre', { q }], () =>
+    fetchMoviesByGenre(q)
   );
 
   return {

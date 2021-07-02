@@ -32,10 +32,10 @@ const SearchMoviesPage: React.FC = () => {
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
+  const { q } = ctx.query as Record<string, string>;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<DataMovies[]>(
-    ['searchMovies', { q: ctx.query.q }],
-    fetchSearchMovies
+  await queryClient.prefetchQuery<DataMovies[]>(['searchMovies', { q }], () =>
+    fetchSearchMovies(q)
   );
 
   return {

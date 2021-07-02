@@ -1,10 +1,9 @@
 import { Box } from '@chakra-ui/react';
-import { Dispatch, SetStateAction } from 'react';
 import { Dates } from '@Enums/heading/dates.enum';
 
 export type SelectorDateProps = {
   popularDate: string;
-  handlePopularDate: Dispatch<SetStateAction<string>>;
+  handlePopularDate: (dateTitle: string) => void;
   dateTitle: string;
 };
 

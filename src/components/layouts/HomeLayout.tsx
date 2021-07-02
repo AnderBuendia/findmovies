@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import MoviesList from '@Components/movies/MoviesList';
 import SelectMovies from '@Components/home/SelectMovie';
 import SelectorDate from '@Components/home/SelectorDate';
@@ -11,7 +10,7 @@ import { DiscoverMovies } from '@Enums/heading/discover-movies.enum';
 export interface HomeLayoutProps {
   data: DataMovies[];
   popularDate: string;
-  handlePopularDate: Dispatch<SetStateAction<string>>;
+  handlePopularDate: (dateTitle: string) => void;
 }
 
 const HomeLayout: React.FC<HomeLayoutProps> = ({

@@ -2,14 +2,9 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { QuerySearchMoviesType } from '@Lib/hooks/useSearchMovies';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
-export const fetchMoviesByGenre = async (
-  params: QuerySearchMoviesType
-): Promise<any> => {
-  const [, { q }] = params.queryKey;
-
+export const fetchMoviesByGenre = async (q: string): Promise<any> => {
   try {
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_MOVIES_URL}discover/movie`,
@@ -40,9 +35,8 @@ export const fetchMoviesByGenre = async (
 };
 
 const useSearchGenre = ({ q = null }: { q?: string }) => {
-  return useQuery<DataMovies[], Error>(
-    ['moviesByGenre', { q }],
-    fetchMoviesByGenre
+  return useQuery<DataMovies[], Error>(['moviesByGenre', { q }], () =>
+    fetchMoviesByGenre(q)
   );
 };
 

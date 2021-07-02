@@ -40,6 +40,7 @@ const SearchBar: React.FC = () => {
           borderLeftRadius="0"
           bgColor="gray.500"
           position="absolute"
+          data-testid="search-movie-button"
         >
           <SearchIcon color="white" w={5} h={5} />
         </Button>
