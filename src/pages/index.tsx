@@ -1,4 +1,4 @@
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, Center } from '@chakra-ui/react';
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { QueryClient } from 'react-query';
@@ -34,9 +34,7 @@ const HomePage: React.FC = () => {
     );
   }
 
-  if (isError) {
-    return <div>{error?.message}</div>;
-  }
+  if (isError) return <Center>{error?.message}</Center>;
 
   const handlePopularDate = (dateTitle: string) => {
     setPopularDate(dateTitle);

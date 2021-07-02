@@ -1,13 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Wrapper } from '../__mocks__/fileMock';
 import HomePage from '@Pages/index';
 import useMovies from '@Lib/hooks/useMovies';
 import useGenres from '@Lib/hooks/useGenres';
-import useSearchMovies from '@Lib/hooks/useSearchMovies';
-import router, { useRouter } from 'next/router';
-
-jest.mock('next/router', () => require('next-router-mock'));
+import router from 'next/router';
 
 const popularMoviesProps = [
   {
@@ -19,23 +15,12 @@ const popularMoviesProps = [
   },
 ];
 
-const searchMoviesProps = [
-  {
-    id: 23,
-    title: 'Luca',
-    poster: 'Luca Poster',
-    vote_average: 8,
-    vote_count: 299,
-  },
-];
-
 const mockedUseMovies = useMovies as jest.Mock<any>;
 const mockedUseGenres = useGenres as jest.Mock<any>;
-const mockedUseSearchMovies = useSearchMovies as jest.Mock<any>;
 
+jest.mock('next/router', () => require('next-router-mock'));
 jest.mock('@Lib/hooks/useMovies');
 jest.mock('@Lib/hooks/useGenres');
-jest.mock('@Lib/hooks/useSearchMovies');
 
 describe('Should render the app without crashing', () => {
   beforeEach(() => {
@@ -68,20 +53,8 @@ describe('Should render the app without crashing', () => {
     expect(getByText(/unable to fetch the movie data/i)).toBeTruthy();
   });
 
-  it('Displays data from useMovies', () => {
-    mockedUseMovies.mockImplementation(() => ({
-      isLoading: false,
-      data: popularMoviesProps,
-    }));
-
-    const { getByText } = render(<HomePage />);
-
-    expect(getByText(/test title/i)).toBeVisible();
-  });
-
-  describe('Search movies', () => {
+  describe('Show movies data', () => {
     beforeEach(() => {
-      mockedUseSearchMovies.mockImplementation(() => ({ isLoading: true }));
       mockedUseMovies.mockImplementation(() => ({
         isLoading: false,
         data: popularMoviesProps,
@@ -92,7 +65,13 @@ describe('Should render the app without crashing', () => {
       jest.clearAllMocks();
     });
 
-    it('Displays search movies', async () => {
+    it('Displays data from useMovies', () => {
+      const { getByText } = render(<HomePage />);
+
+      expect(getByText(/test title/i)).toBeVisible();
+    });
+
+    it('Redirect to search movies', async () => {
       render(<HomePage />);
 
       const searchInput = await screen.findByPlaceholderText(/search/i);
@@ -109,13 +88,6 @@ describe('Should render the app without crashing', () => {
         pathname: '/search/movies',
         query: { q: 'Luca' },
       });
-
-      // mockedUseSearchMovies.mockImplementation(() => ({
-      //   isLoading: false,
-      //   data: searchMoviesProps,
-      // }));
-
-      // expect(screen.getByText(/luca/i)).toBeVisible();
     });
   });
 });

@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient } from 'react-query';
@@ -12,7 +12,9 @@ import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 const SearchMoviesPage: React.FC = () => {
   const router = useRouter();
   const { q } = router.query as Record<string, string>;
-  const { data } = useSearchMovies({ q });
+  const { data, isError, error } = useSearchMovies({ q });
+
+  if (isError) return <Box>{error?.message}</Box>;
 
   return (
     <MainLayout
