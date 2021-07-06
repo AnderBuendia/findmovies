@@ -13,7 +13,7 @@ export type DataMoviesListProps = {
 
 const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
   const { id, title, poster, vote_average, vote_count } = movie;
-
+  console.log('POSTER', poster);
   return (
     <Link href={`${MainPaths.MOVIE}/${id}`}>
       <Box
@@ -24,7 +24,7 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
       >
         <Center borderTopRadius="lg" bgColor="gray.100">
           {poster ? (
-            <CardImage src={poster} alt={title} width={480} height={480} />
+            <CardImage src={poster} alt={title} width={626} height={940} />
           ) : (
             <ImageNotFoundIcon width="180px" height="272px" />
           )}
