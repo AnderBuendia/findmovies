@@ -10,9 +10,9 @@ export type MoviesListProps = {
 
 const MoviesList: React.FC<MoviesListProps> = ({ data, children }) => {
   return (
-    <Container maxW="container.xl" py={6} px={12}>
+    <Container maxW="container.xl" py={6} px={24}>
       {children}
-      <SimpleGrid columns={[1, 2, 4, 5]} gap={4} mt={3}>
+      <SimpleGrid columns={[1, 2, 4, 5]} gap={4} mt={3} px={6}>
         {data &&
           data.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
       </SimpleGrid>

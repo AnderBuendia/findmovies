@@ -24,7 +24,7 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
       >
         <Center borderTopRadius="lg" bgColor="gray.100">
           {poster ? (
-            <CardImage src={poster} alt={title} width={626} height={940} />
+            <CardImage src={poster} alt={title} width={384} height={384} />
           ) : (
             <ImageNotFoundIcon width="180px" height="272px" />
           )}
