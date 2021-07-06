@@ -3,31 +3,21 @@ const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { formatIsoLanguage } from '@Lib/utils/formatCharacters';
+import { UrlPaths } from '@Enums/paths/url-paths.enum';
 import {
   MovieDetail,
   DataMovieCast,
   DataMovieCastDirector,
 } from '@Interfaces/movies/detail-movie.interface';
 
-export type QueryMovieDetailType = {
-  queryKey: [string, { id: string }];
-};
-
-export const fetchMovieDetail = async (
-  params: QueryMovieDetailType
-): Promise<MovieDetail> => {
-  const [, { id }] = params.queryKey;
-
+export const fetchMovieDetail = async (id: string): Promise<MovieDetail> => {
   try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${id}?`,
-      {
-        params: {
-          api_key: publicRuntimeConfig.API_KEY,
-          language: 'en_US',
-        },
-      }
-    );
+    const { data } = await axios.get(`${UrlPaths.MOVIES}movie/${id}?`, {
+      params: {
+        api_key: publicRuntimeConfig.API_KEY,
+        language: 'en_US',
+      },
+    });
 
     const videoKey = await fetchMovieDetailTrailer(id);
     const movieCast = await fetchMovieCast(id);
@@ -35,8 +25,8 @@ export const fetchMovieDetail = async (
     const modifiedData: MovieDetail = {
       title: data.title,
       tagline: data.tagline,
-      background_image: `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${data.backdrop_path}`,
-      poster_image: `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${data.poster_path}`,
+      background_image: `${UrlPaths.BACKGROUND_IMAGE}${data.backdrop_path}`,
+      poster_image: `${UrlPaths.POSTER_IMAGE}${data.poster_path}`,
       genres: data.genres,
       homepage: data.homepage,
       overview: data.overview,
@@ -47,7 +37,7 @@ export const fetchMovieDetail = async (
       budget: data.budget,
       revenue: data.revenue,
       status: data.status,
-      trailer: `https://www.youtube.com/embed/${videoKey}`,
+      trailer: `${UrlPaths.YOUTUBE}${videoKey}`,
       cast: movieCast.cast,
       director: movieCast.director,
     };
@@ -63,7 +53,7 @@ export const fetchMovieDetailTrailer = async (
 ): Promise<string> => {
   try {
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/videos?`,
+      `${UrlPaths.MOVIES}movie/${movieId}/videos?`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -82,7 +72,7 @@ export const fetchMovieCast = async (
 ): Promise<DataMovieCastDirector> => {
   try {
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_MOVIES_URL}movie/${movieId}/credits`,
+      `${UrlPaths.MOVIES}movie/${movieId}/credits`,
       {
         params: {
           api_key: publicRuntimeConfig.API_KEY,
@@ -97,7 +87,7 @@ export const fetchMovieCast = async (
         character: person['character'],
         name: person['name'],
         img: person['profile_path']
-          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${person['profile_path']}`
+          ? `${UrlPaths.CHARACTER_IMAGE}${person['profile_path']}`
           : null,
       }));
 
@@ -107,10 +97,9 @@ export const fetchMovieCast = async (
   }
 };
 
-const useMovie = ({ movieId }: { movieId: string }) => {
-  return useQuery<MovieDetail, Error>(
-    ['movieDetail', { id: movieId }],
-    fetchMovieDetail
+const useMovie = ({ id }: { id: string }) => {
+  return useQuery<MovieDetail, Error>(['movieDetail', { id }], () =>
+    fetchMovieDetail(id)
   );
 };
 

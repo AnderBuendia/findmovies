@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react';
+import { Text, Box } from '@chakra-ui/react';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient } from 'react-query';
@@ -12,9 +12,9 @@ import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 const SearchGenresPage: React.FC = () => {
   const router = useRouter();
   const { q, name } = router.query as Record<string, string>;
-  const { data, error } = useSearchGenre({ q });
+  const { data, isError, error } = useSearchGenre({ q });
 
-  error && <div>Something went wrong...</div>;
+  if (isError) return <Box>{error?.message}</Box>;
 
   return (
     <MainLayout
@@ -34,10 +34,10 @@ const SearchGenresPage: React.FC = () => {
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
+  const { q } = ctx.query as Record<string, string>;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<DataMovies[]>(
-    ['moviesByGenre', { q: ctx.query.q }],
-    fetchMoviesByGenre
+  await queryClient.prefetchQuery<DataMovies[]>(['moviesByGenre', { q }], () =>
+    fetchMoviesByGenre(q)
   );
 
   return {

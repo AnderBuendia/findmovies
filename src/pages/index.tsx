@@ -1,3 +1,4 @@
+import { SimpleGrid, Center } from '@chakra-ui/react';
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { QueryClient } from 'react-query';
@@ -11,19 +12,31 @@ import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
 const HomePage: React.FC = () => {
   const [popularDate, setPopularDate] = useState<string>('day');
-  const { isLoading, isError, error, data } = useMovies({ popularDate });
+  const { isLoading, isFetching, isError, error, data } = useMovies({
+    popularDate,
+  });
 
-  const skeletonArray = [...new Array(10)];
-
-  if (isLoading) {
-    skeletonArray.map((_, index) => <ListSkeleton key={index} />);
+  if (isLoading || isFetching) {
+    return (
+      <SimpleGrid
+        py={20}
+        px={10}
+        columns={[1, 2]}
+        spacing={5}
+        data-testid="load-skeleton"
+      >
+        {[...new Array(10)].map((_, index) => (
+          <ListSkeleton key={index} />
+        ))}
+      </SimpleGrid>
+    );
   }
 
-  if (isError) {
-    <div>{error?.message}</div>;
-  }
+  if (isError) return <Center>{error?.message}</Center>;
 
-  data ? data : {};
+  const handlePopularDate = (dateTitle: string) => {
+    setPopularDate(dateTitle);
+  };
 
   return (
     <MainLayout
@@ -34,7 +47,7 @@ const HomePage: React.FC = () => {
       <HomeLayout
         data={data}
         popularDate={popularDate}
-        handlePopularDate={setPopularDate}
+        handlePopularDate={handlePopularDate}
       />
     </MainLayout>
   );
