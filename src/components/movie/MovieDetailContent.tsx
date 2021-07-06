@@ -2,7 +2,6 @@ import {
   Box,
   Flex,
   Text,
-  Image,
   Center,
   Container,
   UnorderedList,
@@ -18,6 +17,8 @@ import PlayIcon from '@Components/icons/play-icon';
 import { formatNumbers } from '@Lib/utils/formatCharacters';
 import { MovieDetail } from '@Interfaces/movies/detail-movie.interface';
 import ImageNotFoundIcon from '@Components/icons/image-not-found';
+import PosterImage from '@Components/generic/PosterImage';
+import CardImage from '@Components/generic/CardImage';
 
 export type MovieDetailContentProps = {
   data: MovieDetail;
@@ -62,7 +63,12 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
               position="relative"
               onClick={onOpen}
             >
-              <Image borderRadius="lg" src={poster_image} alt={title} />
+              <PosterImage
+                src={poster_image}
+                alt={title}
+                width={300}
+                height={450}
+              />
 
               <Center
                 position="absolute"
@@ -190,11 +196,11 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
             ml={6}
           >
             {person.img ? (
-              <Image
-                objectFit="cover"
+              <CardImage
+                width={240}
+                height={240}
                 src={person.img}
                 alt={person.name}
-                borderTopRadius="lg"
               />
             ) : (
               <ImageNotFoundIcon ml={18} width="100px" height="175px" />

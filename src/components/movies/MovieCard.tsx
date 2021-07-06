@@ -1,9 +1,11 @@
-import { Box, Text, Img as ChakraImg, Center } from '@chakra-ui/react';
+import { Box, Text, Center } from '@chakra-ui/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
 import ImageNotFoundIcon from '@Components/icons/image-not-found';
+import CardImage from '@Components/generic/CardImage';
 
 export type DataMoviesListProps = {
   movie: DataMovies;
@@ -20,13 +22,13 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
         boxShadow="md"
         _hover={{ opacity: 0.7, cursor: 'pointer' }}
       >
-        {poster ? (
-          <ChakraImg src={poster} alt={title} borderTopRadius="lg" />
-        ) : (
-          <Center bgColor="gray.100">
+        <Center borderTopRadius="lg" bgColor="gray.100">
+          {poster ? (
+            <CardImage src={poster} alt={title} width={480} height={480} />
+          ) : (
             <ImageNotFoundIcon width="180px" height="272px" />
-          </Center>
-        )}
+          )}
+        </Center>
 
         <Box p={6} borderTop="gray 1px solid">
           <Text fontWeight="bold" isTruncated textAlign="center">
