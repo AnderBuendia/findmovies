@@ -45,8 +45,6 @@ const MovieDetailContent: React.FC<MovieDetailContentProps> = ({ data }) => {
   } = data;
   const movie_date = new Date(release_date);
 
-  console.log(cast);
-
   return (
     <>
       <Box

@@ -7,11 +7,18 @@ import router from 'next/router';
 
 const popularMoviesProps = [
   {
-    id: 1,
+    id: 13,
     title: 'Test Title',
     poster: 'Test Poster',
     vote_average: 10,
     vote_count: 23,
+  },
+];
+
+const genresProps = [
+  {
+    id: 28,
+    name: 'Action',
   },
 ];
 
@@ -59,6 +66,11 @@ describe('Should render the app without crashing', () => {
         isLoading: false,
         data: popularMoviesProps,
       }));
+
+      mockedUseGenres.mockImplementation(() => ({
+        isLoading: false,
+        data: genresProps,
+      }));
     });
 
     afterEach(() => {
@@ -87,6 +99,32 @@ describe('Should render the app without crashing', () => {
         asPath: '/search/movies?q=Luca',
         pathname: '/search/movies',
         query: { q: 'Luca' },
+      });
+    });
+
+    it('Redirect to search movies by genre', async () => {
+      render(<HomePage />);
+
+      router.push('/search/genres?q=28&name=Action');
+
+      expect(router).toMatchObject({
+        asPath: '/search/genres?q=28&name=Action',
+        pathname: '/search/genres',
+        query: { q: '28', name: 'Action' },
+      });
+    });
+
+    it('Redirect to a movie', async () => {
+      render(<HomePage />);
+
+      router.push({
+        pathname: '/movie/[id]',
+        query: { id: '13' },
+      });
+
+      expect(router).toMatchObject({
+        asPath: '/movie/13',
+        pathname: '/movie/[id]',
       });
     });
   });

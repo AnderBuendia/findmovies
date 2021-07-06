@@ -2,10 +2,11 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { UrlPaths } from '@Enums/paths/url-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
 export const fetchSearchMovies = async (q: string): Promise<DataMovies[]> => {
-  const url = `${process.env.NEXT_PUBLIC_API_MOVIES_URL}search/movie`;
+  const url = `${UrlPaths.MOVIES}search/movie`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -22,7 +23,7 @@ export const fetchSearchMovies = async (q: string): Promise<DataMovies[]> => {
       id: result.id,
       title: result['title'],
       poster: result['poster_path']
-        ? `${process.env.NEXT_PUBLIC_POSTER_URL}${result['poster_path']}`
+        ? `${UrlPaths.ORIGINAL_POSTER}${result['poster_path']}`
         : null,
       vote_average: result.vote_average,
       vote_count: result.vote_count,

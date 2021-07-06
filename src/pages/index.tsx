@@ -16,8 +16,6 @@ const HomePage: React.FC = () => {
     popularDate,
   });
 
-  const skeletonArray = [...new Array(10)];
-
   if (isLoading || isFetching) {
     return (
       <SimpleGrid
@@ -27,7 +25,7 @@ const HomePage: React.FC = () => {
         spacing={5}
         data-testid="load-skeleton"
       >
-        {skeletonArray.map((_, index) => (
+        {[...new Array(10)].map((_, index) => (
           <ListSkeleton key={index} />
         ))}
       </SimpleGrid>

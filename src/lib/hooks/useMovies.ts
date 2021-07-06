@@ -2,12 +2,13 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { UrlPaths } from '@Enums/paths/url-paths.enum';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 
 export const fetchPopularMovies = async (
   popularDate: string
 ): Promise<DataMovies[]> => {
-  const url = `${process.env.NEXT_PUBLIC_API_MOVIES_URL}trending/movie/${popularDate}`;
+  const url = `${UrlPaths.MOVIES}trending/movie/${popularDate}`;
 
   try {
     const { data } = await axios.get(`${url}`, {
@@ -21,9 +22,9 @@ export const fetchPopularMovies = async (
     const modifiedData = await data.results.map((result: DataMovies) => ({
       id: result['id'],
       title: result['title'],
-      poster: !result['poster_path']
-        ? null
-        : `${process.env.NEXT_PUBLIC_POSTER_URL}${result['poster_path']}`,
+      poster: result['poster_path']
+        ? `${UrlPaths.ORIGINAL_POSTER}${result['poster_path']}`
+        : null,
       vote_average: result['vote_average'],
       vote_count: result['vote_count'],
     }));
