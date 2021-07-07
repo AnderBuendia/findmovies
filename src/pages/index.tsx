@@ -18,17 +18,19 @@ const HomePage: React.FC = () => {
 
   if (isLoading || isFetching) {
     return (
-      <SimpleGrid
-        py={20}
-        px={10}
-        columns={[1, 2]}
-        spacing={5}
-        data-testid="load-skeleton"
-      >
-        {[...new Array(10)].map((_, index) => (
-          <ListSkeleton key={index} />
-        ))}
-      </SimpleGrid>
+      <Center>
+        <SimpleGrid
+          py={20}
+          px={10}
+          columns={[1, 2, 4, 5]}
+          spacing={5}
+          data-testid="load-skeleton"
+        >
+          {[...new Array(12)].map((_, index) => (
+            <ListSkeleton key={index} />
+          ))}
+        </SimpleGrid>
+      </Center>
     );
   }
 

@@ -1,6 +1,5 @@
 import { Box, Text, Center } from '@chakra-ui/react';
 import Link from 'next/link';
-import Image from 'next/image';
 import CircularScore from '@Components/generic/CircularScore';
 import { DataMovies } from '@Interfaces/movies/data-movies.interface';
 import { MainPaths } from '@Enums/paths/main-paths.enum';
@@ -13,7 +12,7 @@ export type DataMoviesListProps = {
 
 const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
   const { id, title, poster, vote_average, vote_count } = movie;
-  console.log('POSTER', poster);
+
   return (
     <Link href={`${MainPaths.MOVIE}/${id}`}>
       <Box
@@ -24,7 +23,7 @@ const DataMoviesList: React.FC<DataMoviesListProps> = ({ movie }) => {
       >
         <Center borderTopRadius="lg" bgColor="gray.100">
           {poster ? (
-            <CardImage src={poster} alt={title} width={384} height={384} />
+            <CardImage src={poster} alt={title} width={384} height={480} />
           ) : (
             <ImageNotFoundIcon width="180px" height="272px" />
           )}
